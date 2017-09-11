@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.TimeUnit;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author amy
@@ -17,11 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class TokenAPI {
     private final Logger logger = LoggerFactory.getLogger("TokenAPI");
     
-    private final TokenService tokenService = new TokenService(0, 5, TimeUnit.SECONDS);
-    
-    public TokenAPI() {
-        tokenService.startAsync();
-    }
+    private final TokenService tokenService = new TokenService(0, 5, ChronoUnit.SECONDS);
     
     @RequestMapping("/token")
     public boolean getToken() {
