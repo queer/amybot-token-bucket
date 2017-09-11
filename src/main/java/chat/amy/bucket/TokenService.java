@@ -27,19 +27,13 @@ public class TokenService extends AbstractScheduledService {
     }
     
     public boolean getToken() {
-        if(tokenAvailable.get()) {
-            tokenAvailable.set(false);
-            return true;
-        } else {
-            return false;
-        }
+        return tokenAvailable.compareAndSet(true, false);
     }
     
     @Override
     protected void runOneIteration() throws Exception {
-        if(!tokenAvailable.get()) {
+        if(tokenAvailable.compareAndSet(false, true)) {
             logger.info("Provisioning new token (" + delay + " interval).");
-            tokenAvailable.set(true);
         }
     }
     
